@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <title>Week 1</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand" href="index.html">Ayush Shridhar</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -53,17 +53,17 @@
     </nav>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('img/post-bg.jpg')">
+    <header class="masthead" style="background-image: url('onnx.jpg')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="post-heading">
-              <h1>Man must explore, and this is exploration at its greatest</h1>
-              <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+              <h1>GSoC 2018: My Project</h1>
+              <h2 class="subheading">Implementing an ONNX backend in Julia</h2>
               <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2018</span>
+                <a href="#">Ayush Shridhar</a>
+                on May 13, 2018</span>
             </div>
           </div>
         </div>
@@ -75,19 +75,40 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+            <p>Machine learning is revolutionizing the entire tech industry. Ever since the advent of deep learning, we've seen extraordinary changes in the field of Computer Vision and Natural language processing. Computers can now successfully understand images, detect objects from image and so on.
+              lol
+            </p>
 
-            <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
+            <p>But, here's the problem. There are many Deep Learning libraries available for implementing neural networks. TensorFlow, CNTK, PyTorch, Caffe, MXNet, 
+              CoreML. This just multiplies the troubles. Each framework has its own functioning. Some use Computation graphs, some are completely
+              dynamic.So here's the question engineers have been trying to solve: <br> <b> Is it possible to develop a framework that helps us in 
+                running a model made using framework X into anther framework Y? </b>
+            </p>
 
-            <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+            <p>The answer to that question is Yes, it is possible. It is possible to train an model completely in Caffe and then load and run it completely in PyTorch. The reason behind this is <a href="https://onnx.ai">onnx</a>. 
+              ONNX is a framework for interchangeable machine learning models. It uses Google's Protocol Buffers to serialize models into a common onnx format, and a set of 
+              specifications to read it into another framework.
+            </p>
 
-            <p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+            <p>Although ONNX is currently in its development stage, it shows great promise. It has earned kudos from varoius data scientists and Machine 
+              leanrning practisioners alike. It makes transfer learning cross platform, which is amazing. 
+            </p>
 
-            <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+            <h2 class="section-heading">My Project</h2>
+<p> There was a time when I used to use Python for all data science related work. Now, I can easily say that I'm drifting towards Julia.
+  Julia is slowly becong the mainstream for data scientists, economists, software engineers alike. This comes aas no surprise, seeing how easy and dynamic the langauge is,
+  the wonders that even a few lines of Julia code can do (yes, fewer than Python :)) even while achieving amazing results on the clock.   
+  These qualities make it a perfect langauge for Machine Learning. 
+</p>
 
-            <h2 class="section-heading">The Final Frontier</h2>
+<p>For those who don't know, <a href="http://fluxml.ai/"> Flux</a> is a purely Julian ML framework. It provides an elegant, easy-to-hack approach for implementing Deep learning
+  models. Coding networks in Flux is essentially as simple as writing mathematical equations. </p>
+  My project revolves around developing an ONNX backend for the Julia Flux framework. This would help us
 
-            <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+  1. Load diverse models into Flux.
+  2. Help in growing Flux as a complete framework, by incorporating functionalities from other framweorks.
+  3. Object detection in Julia, something I'm really excited about. 
+</p>
 
             <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
 
