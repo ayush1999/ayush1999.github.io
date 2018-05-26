@@ -96,7 +96,7 @@
                         <i>ZfNet</i> had a pretty good performance (the <i>VGG19</i> actually had a slightly better performance that the <i>VGG19</i> currently
                         hosted on <i>Metalhead.jl</i>), I came across a few legacy issues in a few models. <br>
                         The <i>GoogleNet</i> and <i>ZfNet</i> models had Local Response Normalization layers, which <i>Flux</i> currently doesn't support. 
-                        So, I had to manually bypass this entire layer. As a result, the results were affected. <br>
+                        So, I had to manually bypass this entire layer. As a result, the performance was affected. <br>
                         Quite a few models used asymmetric padding. As advised by my mentors, I used to convert most of the asymmetric
                          paddings into symmetric ones, with a little depreciation in performance. For example, padding of the form 
                          (0,0,2,2) was implemented as (1,1,1,1). This was fine as far as a few models were concerned, but many showed 
