@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Project Report: Week 1-2</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">Ayush Shridhar</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Blog Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('blog2.jpg')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Project Report: Week 1-2, GSoC 2018</h1>
+                        <h2 class="subheading">And objectives for upcoming weeks</h2>
+                        <span class="meta">Posted by
+                            <a href="https://github.com/ayush1999">Ayush Shridhar</a>
+                            on May 26, 2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>These first couple of weeks have been an amazing ride. Do read my first blog summarizing my project and 
+                    objectives <i><a href="file:///home/ayush99/website/ayush1999.github.io/blog/blog1.html">here</a></i>. In the 
+                    following blog, I'm going to summarize my work, the objectives I completed successfully and the work that 
+                    still remains to be done in this regard.
+
+
+                    </p>
+                    <h2 class="section-heading">Objectives completed:</h2>
+                    <ul>
+                    <li><p>
+                        Most of my time during these weeks was spend on writing operator tests for the ONNX ops. I successfully
+                        wrote about 60 tests for different operators. One big hurdle I was able to overcome was the poor performance 
+                        of models. I realized the source of this error after I came across a few discrepancies in the tests, and fixed 
+                         them asap. I got to learn a lot in this process, as I wasn't used to writing tests before.
+                    </p></li>
+
+                    <li><p>
+                        The second big achievement was loading quite a few ONNX models into Flux. I was able to load the <i>SqueezeNet, 
+                        DenseNet121, ResNet50, VGG19, ZfNet, GoogleNet</i> into <i>Flux</i>. While most of the models except for <i>GoogleNet</i> and 
+                        <i>ZfNet</i> had a pretty good performance (the <i>VGG19</i> actually had a slightly better performance that the <i>VGG19</i> currently
+                        hosted on <i>Metalhead.jl</i>), I came across a few legacy issues in a few models. <br>
+                        The <i>GoogleNet</i> and <i>ZfNet</i> models had Local Response Normalization layers, which <i>Flux</i> currently doesn't support. 
+                        So, I had to manually bypass this entire layer. As a result, the results were affected. <br>
+                        Quite a few models used asymmetric padding. As advised by my mentors, I used to convert most of the asymmetric
+                         paddings into symmetric ones, with a little depreciation in performance. For example, padding of the form 
+                         (0,0,2,2) was implemented as (1,1,1,1). This was fine as far as a few models were concerned, but many showed 
+                         asymmetric padding which cannot be converted to symmetric ones, without changing the expected output shape.
+                         For example, changing (0,0,1,1) to symmetric padding isn't possible. The only way around this would be to introduce
+                        support for asymmetric padding in <i>Flux</i>.
+                    </p></li>
+
+                    <li><p>
+                        I got to learn a lot in this process. I found errors in a few <i>ONNX</i> models and I opened issues in the 
+                        respective <i>ONNX</i> repositories (<a href="https://github.com/onnx/onnx/issues/created_by/ayush1999">here</a>). 
+                        I also encountered an error in <i>Flux</i> layers, which was changing the type of output as
+                        compared to the input. The issue I raised in <i>Flux</i> can be found <a href="https://github.com/FluxML/Flux.jl/issues/260">here</a>.
+                    </p></li>
+
+                    <li><p>
+                        I also opened a Pull Request in <i>FluxML/Metalhead.jl</i>, where I added four more models to the Metalhead repository. The PR can 
+                        be found <a href="https://github.com/FluxML/Metalhead.jl/pull/6">here</a>.
+                    </p></li>
+
+                    <p>
+                        </ul>
+                    </p>
+                    <h2 class="section-heading">Objectives for the next two weeks:</h2>
+                    <ul>
+                    <li><p> Implementing Local Response Normalization (LRN) in  Flux. I'm currently working on this and implementing it by referring 
+                        to the research paper by <i>Krizhevsky et al</i>, which can be found <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">here</a>.
+                    </p></li>
+
+                    <li><p>
+                        <i>Keras.jl</i>: I have already begun work on this (<a href="https://github.com/ayush1999/Keras.jl">here</a>). Rather than generating code, 
+                        (like <i>ONNX.jl</i> does), I'm working on 
+                        loading <i>Keras</i> models directly into <i>Flux</i>. I've been able to get the <i>MNIST</i> classifier loaded into <i>Flux</i>. The current 
+                        impediments in this domain include increasing performance of the models. The <i>MNIST</i> model loaded doesn't have a good 
+                        accuray, so I need to investigate the reason behind this. Also, once I get this running for <i>MNIST</i>, I will expand 
+                        its functionalities to include other complicated models.
+                    </p></li>
+                    <li><p>
+                        <i>ONNX.jl</i> models: The <i>ONNX</i> models repository is updated frequently. As soon as the correct models are updated, I 
+                        will resume testing and loading them into <i>Flux</i>.
+                    </p></li>
+                    <h2 class="section-heading">Conclusion: </h2>
+
+                    <p>
+                        The next few weeks are certainly going to testing my programming skills. However, I'd like to thank my mentor, 
+                        <a href="https://github.com/philtomson">Phil Tomson</a> for taking time out from his schedule to help me    and for his continuous support and guidance. 
+                        I'm pretty confident that I would be able to meet most of the objectives under his supervision. 
+                        <br>
+                        Hoping for the best!
+                    </p>
+                    </ul>
+                    <!--
+            <a href="#">
+              <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+            </a>
+            <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+
+            <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+
+            <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
+
+            <p>Placeholder text by
+              <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+              <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+           -->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com/ayuSHridhar">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/in/ayush-shridhar-23480b130/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://github.com/ayush1999">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Ayush Shridhar</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
