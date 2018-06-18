@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Week 3-5, GSoC 2018</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">Ayush Shridhar</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Blog Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('blog3.png')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Blog 3, <br>GSoC 2018 @JuliaLang</h1>
+                        <h2 class="subheading">A brief summary of my milestones.
+                        </h2>
+                        <span class="meta">Posted by
+                            <a href="https://github.com/ayush1999">Ayush Shridhar</a>
+                            on June 17, 2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>The previous few weeks involved working on <i>ONNX.jl</i> and <i>Keras.jl</i>. I came across various challenges,
+                        errors, but was able to surpass most of them. I got to learn a lot in this process, about Julia's infrastructure, 
+                        Keras, Flux and Machine learning in general. In this blog, I'm going to summarize my work, mostly on Keras.jl, since I
+                        spent a major chunk of my time on it. Incase you haven't,
+                        please do read the first two blogs <a href="https://ayush1999.github.io/blog/index.html">here</a>. 
+                    </p>
+
+                    <h2 class="section-heading"><a href="https://github.com/ayush1999/Keras.jl">Keras.jl</a></h2>
+                    <p> A major portion of my time was spent on <a href="https://github.com/ayush1999/Keras.jl"><i>Keras.jl</i></a>. Keras.jl 
+                        is a package built on top of the Flux machine learning framework, to directly run <i>Keras</i> pretrained models in <i>Flux</i>.
+                        This is done by converting the entire <i>Keras</i> model into a Julian format. When a <i>Keras</i> (running either <i>TensorFlow</i> or 
+                        <i>Theano</i> backend) model is compiled, it actually forms a computation graph. In layman's terms, Computation graphs can
+                        be thought of as a regular graph, but with each node representing layers and the edges representing the flow of tensors
+                        (hence the name <i>TensorFlow</i>). <i>Keras.jl</i> interprets this graph and converts it into pure Julia code (using <i>DataFlow.jl</i>), 
+                        by reading the weights and other parameters of the model at each step. As a result, what we get is a Julian
+                        representation of the model. This can then be directly run on top of <i>Flux</i>, with appropriate inputs.<br><br>
+                        <i>Keras.jl</i> also provides a simple and easy-to-use interface. Loading and running a <i>Keras</i> is model is as simple as:<br>
+                        <pre>
+ >>> using Keras
+
+ >>> model = Keras.load("model_structure.json", "model_weights.h5")
+
+ >>> model(...)
+                        </pre>
+                        <br>
+                        (<i>model_structure</i> is the structure of the model, in JSON format.)<br>
+                        (<i>model_weights</i> stores the weights of the model, in HDF5 format.)<br>
+                        These fields can be obtained from any Keras model, using <i>model.to_json()</i> and <i>model.save_weights()</i>
+                        respectively.
+                    </p>
+
+
+                    <h2 class="section-heading">Computer Vision based models:</h2>
+
+                    <p>
+                        I was able to load most of the popular Vision based Keras models into Flux. These models include:<br><br>
+                        <i>
+                        I. Inception Netv3<br>
+                        II. DenseNet 121<br>
+                        II. DenseNet 121<br>
+                        III. DenseNet 169<br>
+                        IV. DenseNet 201<br>
+                        V. ResNet50</i>
+                        <br><br>
+                        Most of the loaded models has pretty good accuracies (at par with the original ones).
+                    </p>
+                    
+                    
+                    <h2 class="section-heading">Natural Language Processing related models:</h2>
+                    <p>I spent a major chunk of my time working on loading NLP related models. I implemented and loaded three
+                        NLP models:<br><br>
+
+                        <strong>I. IMDb sentiment analysis:</strong><br>
+                        The model was trained on the IMDb sentiment analysis dataset, which contains 25,000 movie reviews and
+                        the sentiment (0/1) associated with them. The Keras model showed a 87.25% accuracy, and the corresponding 
+                        loaded Flux models showed a 87.2% accuracy (pretty good result). The model also showed good results when 
+                        tested on user input:
+                        <br><br>
+                        <pre>
+ >>> model("It was such a waste of time")
+ 0
+
+ >>> model("such amazing stuff")
+ 1
+                        </pre><br>
+                        The example, along with instructions, can be found <u><a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/imdb%20sentiment%20analysis">here</a></u>.
+                        <br><br>
+                        <strong>I. Reuters topic classification:</strong><br>
+                        The dataset contains 11,228 newswires from Reuters, labeled over 46 topics. Each wire is encoded as a sequence
+                        of word indexes.<br> To know more, have a look at <u><a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/reuters%20topic%20classification">this</a></u>.
+                        <br><br>
+                        <strong>I. Text Generation using LSTMs:</strong>
+                        <br> Text generation, in general, consists of training a model on any text dataset, such that the model learns
+                        useful patterns from the data. After training for a while, the model starts outputting words that make sense
+                        as a standalone entity. LSTMs (Long Short Term Memory) networks have proven to be very effective in this case. 
+                        They are capable of remembering the relation among sequences over long distances, which makes them ideal for 
+                        text generation. The Keras model I created was trained on the <i>Alice in Wonderland</i> text, which isn't
+                        protected under any copyright/license. The model was trained to take as input as sequence of 100 characters, and 
+                        predict the next one. Tracing Keras LSTM to Flux LSTM was quite challenging, as they handle input in different 
+                        ways. I was able to load the model successfully in Flux and the output, after training for just 15 epochs was pretty
+                        decent.<br><br>
+                        
+                        <pre>
+ Original text: went straight on like a tunnel for some way, and then
+        dipped suddenly down, so suddenly that alice had not a mome
+
+ Produced text: went straight on like a tunnel for some way, and then
+        dipped suddenly down, so suddenly that alice had not a mome tf the fand,
+        she wast on toineng an thre of the garter. whe mone dater and soen an an
+        ar ien so the toede an the coold an thee, th shen io the want toon if the
+        woil, and yhu io the whre tie dorse ’hu aoh yhu  than i soned th thi would
+        be no tee thet
+                        </pre><br>
+
+                        Notice that the output might not make sense, but it was able to produce familiar words, such as <i>she, the
+                            on, of, and, an, so
+                        </i> etc. from the training text. It is advisable to train the model for at least 25 epochs to get better results.
+                         
+                        <br><br>
+                    </p>
+                    <h2 class="section-heading">Other miscellaneous contributions:</h2>
+                    <p>
+                        Apart from the mentioned, I also opened an issue in Flux, and created a PR in
+                         <a href="https://github.com/JuliaText/TextAnalysis.jl">JuliaText/TextAnalysis.jl</a>, where I added the sentiment 
+                         analysis functionality. The PR can be found <a href="https://github.com/JuliaText/TextAnalysis.jl/pull/77">here</a>(W.I.P).
+
+
+                    </p>
+                    <!--
+            <a href="#">
+              <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+            </a>
+            <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+
+            <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+
+            <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
+
+            <p>Placeholder text by
+              <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+              <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+           -->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com/ayuSHridhar">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/in/ayush-shridhar-23480b130/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://github.com/ayush1999">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Ayush Shridhar</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
