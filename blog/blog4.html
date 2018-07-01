@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Week 6-7, GSoC 2018</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">Ayush Shridhar</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Blog Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('blog4.jpeg')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Blog 4, <br>GSoC 2018 @JuliaLang</h1>
+                        <h2 class="subheading">Revisiting the past few weeks.
+                        </h2>
+                        <span class="meta">Posted by
+                            <a href="https://github.com/ayush1999">Ayush Shridhar</a>
+                            on July 1, 2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>Incase you haven't,
+                        please do read the first three blogs <a href="https://ayush1999.github.io/blog/index.html">here</a>. 
+                    </p>
+
+                    <h2 class="section-heading"><a href="https://github.com/ayush1999/Keras.jl">Keras.jl</a>, continued</h2>
+                    <p> The week started with continuing working on <i>Keras.jl</i> ops. My target was to implement more 
+                        operators and examples for time series forecasting in Keras(with Flux backend). I worked on these 
+                        operators, and two demos for univariate time series analysis: <br>
+                        1. Stock market price prediction.
+                        2. Bitcoin price prediction.
+                    </p>
+
+
+                    <h2 class="section-heading">Operators implemented:</h2>
+
+                    <p>
+                        Most operators I worked on were related to Natural Language Processing, LSTMs. These include:<br><br>
+                        1. Conv1D (Temporal Convolutions)<br>
+                        2. MaxPool1D <br>
+                        2. AveragePool1D<br>
+                        3. I worked on rewriting the Conv2D op, after identifying a few bottlenecks in it, which I had been
+                        overlooking.<br>
+
+                    </p>
+
+                    <h2 class="section-heading">Models implemented:</h2><br><br>
+                    <strong>I. Text Generation using LSTMs (continued):</strong>
+                    <br> Text generation, in general, consists of training a model on any text dataset, such that the model learns useful patterns
+                    from the data. After training for a while, the model starts outputting words that make sense as a standalone entity. LSTMs
+                    (Long Short Term Memory) networks have proven to be very effective in this case. They are capable of remembering the relation
+                    among sequences over long distances, which makes them ideal for text generation. The Keras model I created was trained on
+                    the
+                    <i>Alice in Wonderland</i> text, which isn't protected under any copyright/license. The model was trained to take as input as
+                    sequence of 100 characters, and predict the next one. Tracing Keras LSTM to Flux LSTM was quite challenging, as they handle
+                    input in different ways. I was able to load the model successfully in Flux and the output, after training for just 15 epochs
+                    was pretty decent.
+                    <br>
+                    <br>
+                    
+                    <pre>
+ Original text: went straight on like a tunnel for some way, and then
+                dipped suddenly down, so suddenly that alice had not a mome
+                    
+ Produced text: went straight on like a tunnel for some way, and then
+                dipped suddenly down, so suddenly that alice had not a mome tf the fand,
+                she wast on toineng an thre of the garter. whe mone dater and soen an an
+                ar ien so the toede an the coold an thee, th shen io the want toon if the
+                woil, and yhu io the whre tie dorse ’hu aoh yhu  than i soned th thi would
+                be no tee thet
+                                            </pre>
+                    <br> Notice that the output might not make sense, but it was able to produce familiar words, such as
+                    <i>she, the on, of, and, an, so
+                    </i> etc. from the training text. It is advisable to train the model for at least 25 epochs to get better results.
+
+                    <h2 class="section-heading">Time series analysis related models:</h2>
+                    <p>As mentioned above, I implemented two time series models:<br><br>
+
+                        <strong>I. Stock market price prediction:</strong><br>
+                        The aim was to predict the price of stock market opening on a given day, using the opening, closing, high and
+                        low data for the previous 30 days. The dataset was taken from <i>Kaggle</i>.LSTMs were present at the heart of the model. The LSTM input was a <i>(1, 30, 4)
+                        </i> dimensional data, where 30 presents the timesteps, and 4 reflects the input dimension per timestep. The Keras 
+                        code, corresponding model with Flux backend can be found <a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/stock%20prediction">here</a>.
+                        Running the model is pretty simple, (also mentioned in the README.md):
+                        <br><br>
+                        <ul>
+    From the terminal, execute <i>python main.py</i>. This generates the model structure, model weights, and a few other files. <br>
+    Again, run <i>julia main.jl</i>. This will load and display the predictions.
+                        </ul>
+                        <br><br>
+
+                        <strong>II. Bitcoin price prediction:</strong><br>
+                        The dataset was again taken from Kaggle. The aim was to predict the price of bitcoin on a particular day, given the
+                        price at the previous few days. The code can be found <a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/bitcoin%20price%20prediction">here</a>.
+                        The results were pretty good:<br><br>
+                        <img src="bitcoin.png">
+                        <br><br>
+                          The green curve displays the actual price of bitcoin, whereas if you observe closely, the red curve indicated the
+                          predicted value, by the LSTM. As you can see, the results are pretty close.
+                        <br><br>
+                    </p>
+                    
+                    <!--
+            <a href="#">
+              <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+            </a>
+            <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+
+            <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+
+            <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
+
+            <p>Placeholder text by
+              <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+              <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+           -->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com/ayuSHridhar">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/in/ayush-shridhar-23480b130/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://github.com/ayush1999">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Ayush Shridhar</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
