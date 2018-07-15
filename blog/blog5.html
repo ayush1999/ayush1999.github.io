@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Week 8 & 9, GSoC 2018</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">Ayush Shridhar</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Blog Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('blog5.jpg')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>Week 8 & 9 ,GSoC 2018</h1>
+                        <h2 class="subheading">Expanding support for more operators, models and writing more tests.</h2>
+                        <span class="meta">Posted by
+                            <a href="https://github.com/ayush1999">Ayush Shridhar</a>
+                            on July 15, 2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>
+                        This blog summarizes the work in did during the 8th & 9th weeks of GSoC'18. In case you haven't, do read 
+                        the earlier blogs <u><a href="https://ayush1999.github.io/blog/index.html">here</a></u>.
+                    </p>
+
+                    <h2 class="section-heading">Sentiment Analysis using pretrained GloVe embeddings</h2>
+                    <p> Keras.jl provides an interface to run pretrained Keras models (either TensorFlow or Theano backend) with a 
+                        Flux backend. This is done by reading data simultaneously from the <i>weights.h5</i> model weight file and 
+                        <i>structure.json</i> model structure file. Every Keras layer, such as <i>Conv, MaxPool, Dropout, BatchNorm 
+                        </i>just to name a few, are converted into corresponding Flux operators, generally as lambda function. Once 
+                        we have all layers into a Julian format, the next step remains generating the dataflow graph from these 
+                        operators. <i>DataFlow.jl</i> is used to generate the graph.
+                        One major model that I was able to run with Flux backend was the <i><a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/sentiment%20analysis%20using%20glove%20embeddings">Sentiment Analysis 
+                        using pretrained GloVe embeddings</a></i>.</p>
+                        <p>My initial aim was to load the pretrained model from <a>this GitHub repo</a>. But as it turns out there is 
+                        an error in the model itself, so I had to implement it from scratch in Keras. The model used GloVe embeddings
+                        and 1-D Convolution, Dropout, 1-D MaxPool and Dense layers. <br></p>
+                        <ul>
+                        <li>I had to implement 1-D Convolutions using the <i>Flux Conv</i>. Since this operator isn't used generally for
+                        3-D inputs, the trick was to convert every input into 4-D, apply the operation and return the reshaped output.<br><br></li>
+
+                        <li>Similar problems existed for MaxPool 1-D. Flux doesn't have a separate interface for 1-D operations, although
+                        they are used extensively in Natural Language Processing tasks.</li><br>
+
+                        <li>Another major issue that I had been verlooking was <i>Convolutions/Cross correlations</i>. Many people don't 
+                        understand the difference between these tensor operations, and use them in place of each other. While 
+                        investigating the reason behind wrong <i>Conv</i> output, I realized that the <i>Flux.Conv</i> actually inverts
+                        the weight kernel before performing the Convolution operation, unlike other major frameworks like <i>
+                        TensorFlow</i>. This inversion of weights is actually done by flipping the kernel about a vertical axis and 
+                        then  about a horizontal axis.<br></li><br>
+                        Cross-correlation, on the other hand, is similar to Convolutions, but without flipping the kernel. Now the <i>NNlib
+                         </i> does provide an optional <i>mode</i> parameter in its API, but Flux apparently takes <i>mode = 0</i> by
+                         default. I worked on a PR to reflect this parameter in Flux, which is currently W.I.P.
+                        <br><br>
+                        </ul>
+                        After a few more fixes, I was able to load the entire model successfully into Flux. The model is now giving
+                        perfect results for the test cases.
+
+                    </p>
+
+                    <h2 class="section-heading"><a href="https://github.com/FluxML/ONNX.jl">ONNX.jl</a></h2>
+
+                    <p>
+                        <i>ONNX.jl</i> provides functionalities to load and run ONNX models into Flux. Tl;dr this is done by constructing the
+                        dataflow graph from the protobuf-serialized file, and them generating Julia code. I continued loading and testing more
+                        ONNX models. I fixed the <i>Convolution</i> error in <i>ONNX.Conv</i>, and raised a few issues in the <i>BatchNorm-CPU 
+                        </i>implementation of the operator, to maintain uniformity in the <i>BatchNorm</i> implementation.<br><br>
+                        I worked on more operators for the package, adding support for <i>Unsqueeze, Cross-correlation, BatchNorm, 
+                        1-D maxpool </i>amongst others. Apaart from this, I also opened issues and PRs in <i>Flux</i> and corresponding API 
+                        calls in <i>NNlib</i>:
+                        <ul>
+                            <li>Reflecting <i>mode</i> parameter eternally in <i>NNlib</i>.</li>
+                            <li>Adapting to the parameter changes from <i>Flux</i>.</li>
+                            <li>Reimplementing BatchNorm using standard definition.</li>
+                        </ul>
+                    </p>
+
+                    <h2 class="section-heading">Local Response Normalization:</h2>
+                    <p>
+                        Commonly known as LRN, Local Response Normalization is a technique, which was introduced in the ImageNet 
+                        research paper by krizhevsky et al, titled <i><b>Imagenet Classification with Deep Convolutional Neural 
+                        Networks</b></i>. The paper can be found <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">here</a>.
+                    </p>
+                    <p>
+                        The LRN Normalization technique was found to aid learning of parameters in the model. In general, the tensor 
+                        is normalized according to the scheme:
+                        <img src="LRN.png">
+                        <br><br>
+                        Where a<sup>i</sup><sub>x,y</sub> is the activity of a neuron computed by applying kernel <i>i</i> at position ( x,y ) and then applying the ReLU
+                        nonlinearity, the b<sup>i</sup><sub>x,y</sub> is the response-normalized activity.
+                        <br><br>
+                        I created a PR for adding LRN support in Flux, which can be found <a href="https://github.com/FluxML/Flux.jl/pull/312">here</a>.
+                        The changes are most probably going to be merged in the next major release of Flux.
+                    </p>
+                    <!--
+            <a href="#">
+              <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+            </a>
+            <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+
+            <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
+
+            <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
+
+            <p>Placeholder text by
+              <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+              <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+           -->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com/ayuSHridhar">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/in/ayush-shridhar-23480b130/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://github.com/ayush1999">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Ayush Shridhar</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
