@@ -83,8 +83,8 @@
                     <p> Keras.jl provides an interface to run pretrained Keras models (either TensorFlow or Theano backend) with a 
                         Flux backend. This is done by reading data simultaneously from the <i>weights.h5</i> model weight file and 
                         <i>structure.json</i> model structure file. Every Keras layer, such as <i>Conv, MaxPool, Dropout, BatchNorm 
-                        </i>just to name a few, is converted into corresponding Flux operators, generally as a lambda function. Once 
-                        we have all layers into a Julian format, the next step remains generating the dataflow graph from these 
+                        </i>,just to name a few, is converted into corresponding Flux operators, generally as a lambda function. Once 
+                        we have obtained all layers in a Julian format, the next step remains generating the dataflow graph from these 
                         operators. <i>DataFlow.jl</i> is used to generate the graph.
                         One major model that I was able to run with Flux backend was the <i><a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/sentiment%20analysis%20using%20glove%20embeddings">Sentiment Analysis 
                         using pretrained GloVe embeddings</a></i>.</p>
