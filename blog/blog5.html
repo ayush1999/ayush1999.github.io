@@ -83,12 +83,12 @@
                     <p> Keras.jl provides an interface to run pretrained Keras models (either TensorFlow or Theano backend) with a 
                         Flux backend. This is done by reading data simultaneously from the <i>weights.h5</i> model weight file and 
                         <i>structure.json</i> model structure file. Every Keras layer, such as <i>Conv, MaxPool, Dropout, BatchNorm 
-                        </i>just to name a few, are converted into corresponding Flux operators, generally as lambda function. Once 
+                        </i>just to name a few, is converted into corresponding Flux operators, generally as a lambda function. Once 
                         we have all layers into a Julian format, the next step remains generating the dataflow graph from these 
                         operators. <i>DataFlow.jl</i> is used to generate the graph.
                         One major model that I was able to run with Flux backend was the <i><a href="https://github.com/ayush1999/Keras.jl/tree/master/examples/sentiment%20analysis%20using%20glove%20embeddings">Sentiment Analysis 
                         using pretrained GloVe embeddings</a></i>.</p>
-                        <p>My initial aim was to load the pretrained model from <a>this GitHub repo</a>. But as it turns out there is 
+                        <p>My initial aim was to load the pretrained model from <a href="https://github.com/laviavigdor/twitter-sentiment-analysis">this GitHub repo</a>. But as it turns out there is 
                         an error in the model itself, so I had to implement it from scratch in Keras. The model used GloVe embeddings
                         and 1-D Convolution, Dropout, 1-D MaxPool and Dense layers. <br></p>
                         <ul>
@@ -98,7 +98,7 @@
                         <li>Similar problems existed for MaxPool 1-D. Flux doesn't have a separate interface for 1-D operations, although
                         they are used extensively in Natural Language Processing tasks.</li><br>
 
-                        <li>Another major issue that I had been verlooking was <i>Convolutions/Cross correlations</i>. Many people don't 
+                        <li>Another major issue that I had been overlooking was <i>Convolutions/Cross correlations</i>. Many people don't 
                         understand the difference between these tensor operations, and use them in place of each other. While 
                         investigating the reason behind wrong <i>Conv</i> output, I realized that the <i>Flux.Conv</i> actually inverts
                         the weight kernel before performing the Convolution operation, unlike other major frameworks like <i>
@@ -122,7 +122,7 @@
                         ONNX models. I fixed the <i>Convolution</i> error in <i>ONNX.Conv</i>, and raised a few issues in the <i>BatchNorm-CPU 
                         </i>implementation of the operator, to maintain uniformity in the <i>BatchNorm</i> implementation.<br><br>
                         I worked on more operators for the package, adding support for <i>Unsqueeze, Cross-correlation, BatchNorm, 
-                        1-D maxpool </i>amongst others. Apaart from this, I also opened issues and PRs in <i>Flux</i> and corresponding API 
+                        1-D maxpool </i>amongst others. Apart from this, I also opened issues and PRs in <i>Flux</i> and corresponding API 
                         calls in <i>NNlib</i>:
                         <ul>
                             <li>Reflecting <i>mode</i> parameter eternally in <i>NNlib</i>.</li>
