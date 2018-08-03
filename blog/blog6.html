@@ -81,17 +81,24 @@
                         involved constant coding, debugging, testing and repeating this task again, until proper results were achieved. 
                         I got to learn a lot in this process, about Julia, Flux and Machine 
                         Learning in general. <br><br>
-                        I had proposed to work on two packages: ONNX.jl and Keras.jl. I'm glad I was able 
+                        My aim was to work on the Flux ecosystem. Flux is a purely Julian Machine Learning framework, where implementing
+                        neural nets is as simple as writing mathematical equations. Flux makes Machine Learning easy to understand, 
+                        implement and more intuitive. However, one way to show the easy yet dynamic nature of Flux would be to load and 
+                        run models made in other advanced frameworks, such as TensorFlow, PyTorch, MXNet, Caffe. This is where my project 
+                        comes in. The aim of my project was to implement readers for loading and running advanced and state of the art models
+                        in Flux.<br><br>
+                        
+                        I had proposed to work on two such packages: ONNX.jl and Keras.jl. I'm glad I was able 
                         to meet the objectives, along with making contributions to other supporting packages in the Flux ecosystem, 
                         such as Flux.jl, MetalHead.jl and TextAnalysis.jl to name a few. In this blog, I'd like to list my work, the PRs that still
                         need some work, and discuss the future of these packages.
                     </p>
 
-                    <h2 class="section-heading">ONNX.jl</h2>
+                    <h2 class="section-heading"><a href="https://github.com/FluxML/ONNX.jl"><u>ONNX.jl</u></a></h2>
                     <p>
  To know more about ONNX.jl, please refer to my ONNX specific blog post <a href="https://medium.com/@ayush1999/onnx-jl-the-past-present-and-future-d3b497a0cd4c">
  here</a>. The coding period started with working on ONNX.jl. My target for ONNX.jl was to make
-                        it good enough to be used to load supported models into Flux. ONNX.jl was pretty much non-existent before, so,
+                        it good enough to be used to load supported models into Flux. ONNX.jl was pretty much non-existent before, so
                         I had to write most of it from scratch. Now the main issue here is that the main package, <a href="https://onnx.ai">onnx
                         </a> is itself under development
                         at this stage. I had to keep an eye out for the changes they made in their ecosystem, and how it affected ONNX.jl.
@@ -109,7 +116,7 @@
                             <li><a href="https://github.com/FluxML/ONNX.jl/commit/213005cb4efc9107dc09e47bc3395f18a4de0f2f">Conversion to these newer types</a></li>
                             <li><a href="https://github.com/FluxML/ONNX.jl/commit/28a1811e5e0da901ce31e6a04d7d0b1e33342ddb">Extract weight from correct source.</a></li>
                             <li><a href="https://github.com/FluxML/ONNX.jl/commit/65df677d24de5a317366a7f389d1073f87265ba7">Basic Test module</a></li>
-                            <li><a href="https://github.com/FluxML/ONNX.jl/commit/e2652127dfff402c7485fdff60d2bfb7152362f1">LOgical Operators and corresponding tests.</a></li>
+                            <li><a href="https://github.com/FluxML/ONNX.jl/commit/e2652127dfff402c7485fdff60d2bfb7152362f1">Logical Operators and corresponding tests.</a></li>
                             </u>
                         </ul>
 
@@ -133,7 +140,22 @@
                         I was successfully able to load and run quite a few Keras models using Keras.jl. This involved mapping each Keras layer to 
                         corresponding Flux operator, and converting them into a Julian graph. The models were related to 
                         Computer Vision (ResNet), Natural Language Processing (Text generation, Sentiment Analysis with and without
-                        GloVe embeddings), Stock and Bitcoin price prediction.
+                        GloVe embeddings), Stock and Bitcoin price prediction. Keras.jl doesn't only let you analyse results of a Keras model with a 
+                        Flux backend, but is also helpful in debugging models, such as finding the output of a model, layer by layer (not only all
+                        the layers combined). It also provides a pretty simple interface to load a model. Running a model typically requires two files:
+                        <br><br>
+                        <ul>
+                            <li>The <i>weights.h5</i> model weight file.</li>
+                            <li>The <i>structure.json</i> model structure file.</li>
+                        </ul>
+                        <br>
+                        Loading a model is as simple as:<br><br>
+                        <pre>
+ >>> using Keras
+ >>> model = Keras.load("structure.json", "weights.h5")
+                        </pre>
+                        And <i>model</i> is your corresponding model. It can be called with proper inputs to get the output.
+
                     </p>
 
                     <p>
@@ -141,7 +163,7 @@
                         <ul><u>
                             <li><a href="https://github.com/ayush1999/Keras.jl/commit/5daa900ffd2e19098a837b485423b73f3615d7b0">Basic support for 
                             Sequential API</a></li>
-                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/867775a806d3b442b1f922a9080ed2018ef5d781">Basic function API support.</a></li>
+                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/867775a806d3b442b1f922a9080ed2018ef5d781">Basic functional API support.</a></li>
                             <li><a href="https://github.com/ayush1999/Keras.jl/commit/ed947c194b4c05097e590b6c2469178753720d5b">Docs and miscellaneous changes.</a></li>
                             <li><a href="https://github.com/ayush1999/Keras.jl/commit/c682b35419fb2bb67c7bf638430282cfc36213eb">IMdB sentiment analysis example.</a></li>
                             <li><a href="https://github.com/ayush1999/Keras.jl/commit/6586860a473ffb0eadae8ec4fbb98cfabc4e2728">Text Generation</a></li>
