@@ -103,12 +103,21 @@
                         </a> is itself under development
                         at this stage. I had to keep an eye out for the changes they made in their ecosystem, and how it affected ONNX.jl.
                         Apart from the operators, some of the ONNX models were also not ready for production, but I was able to load a few that
-                        showed better results. <br>
-                        ONNX.jl can now be used to load and run models efficiently.<br><br>
+                        showed better results. <br> Again, the ONNX interface is very easy to use. All you need is the <i>model.onnx</i> file.
+                        Loading this model in Flux is as simple as:<br><br>
+                        <pre>
+ >>> using ONNX
+ >>> ONNX.load_model("model.onnx")
+ >>> weights = ONNX.load_weights("weights.bson")
+ >>> final_model = include("model.jl")
+                        </pre>
+                        <br>
+                        And <i>final_model</i> is the desired Flux model.<br> 
+                        At this stage, ONNX.jl be used to load and run models efficiently.<br><br>
                         <b>Links to commits:</b><br><br>
                         As I said, I had to write most of the package from scratch, so you can find my commits <a href="https://github.com/FluxML/ONNX.jl/commits/master">here</a>.
                         However, I'd like 
-                        to highlight a few major commits. <br>
+                        to highlight a few major commits. <br><br>
                         <ul>
                             <li><u a href="https://github.com/FluxML/ONNX.jl/commit/f5cb01d3d86e6483bfad56ee383b6e5da8ae0e3e">Adding the ProtoBuf file</a></li>
                         
@@ -124,6 +133,16 @@
                         Apart from this, I also wrote operator tests. In total, I was able to write tests for approximately 125 operators.
                         I also opened a few issues in the main ONNX repository, which highlighted some bugs in models, errors and missing details 
                         in docs. These issues can be found <u a href="https://github.com/onnx/onnx/issues/created_by/ayush1999">here</u></a>.
+                        <br><br>
+                        ONNX.jl also has four model tests at the moment, for the following models:<br><br> 
+                        <ul>
+                            <li>SqueezeNet</li>
+                            <li>Emotion Ferplus</li>
+                            <li>VGG19</li>
+                            <li>MNIST Classifier</li>
+                        </ul>
+                        These models not only help in verifying the implementation of the operators working as a single unit, but can also
+                        be used as a starting point for other tasks, <i>Neural Style Transfer</i> for example.
                         <br><br>
                         <b>Future Work:</b><br><br>
                         As I mentioned, ONNX is under development, so we'd have to keep track of the changes taking place in ONNX and how they
@@ -183,9 +202,13 @@
                         <li>GoogleNet</li>
                     </ul>
                     
-                    The merged PR for this can be found <u a href="https://github.com/FluxML/Metalhead.jl/pull/6">here</u></a>.
+                    The merged PR for this can be found <u a href="https://github.com/FluxML/Metalhead.jl/pull/6">here</u></a>.<br>
+                    <br>
+                    Since I was working with pre-trained models, I also used Keras.jl to work on a PR in <i>TextAnalysis.jl</i>. The 
+                    aim was to implement a Sentiment Analysis functionality, with a simple interface. The changes can be found 
+                    <a href="https://github.com/JuliaText/TextAnalysis.jl/pull/77">here</a>, from where the work was continued on a separate PR.
                     
-                    I also have a few unmerged PRs at this moment:
+                    I also have a few unmerged PRs at this moment:<br><br>
                     <ul><u>
                         <li>
                             <a href="https://github.com/FluxML/Flux.jl/pull/312">Support for Local Response Normalization.</a>
@@ -200,7 +223,8 @@
                     </ul>
                     </p>
                     <p>
-                        Apart from pull requests, I also opened a few issue highlighting changes and additions required in Flux.
+                        Apart from pull requests, I also opened a few issue highlighting changes and additions required in Flux. As Flux 
+                        evolves as a simple to use yet powerful framework, it'll be important to work on these issues.<br>
                         A few of the issues that still need work are:
                         <ul><u>
                             <li>
@@ -214,9 +238,7 @@
                         </ul>
                     </u>
                     </p>
-                    <p>I also created a PR to TextAnalysis.jl, adding the Sentiment analysis functionality. The work can be found 
-                        <a href="https://github.com/JuliaText/TextAnalysis.jl/pull/77">here</a>.
-                    </p>
+                    
                     
                     <!--
             <a href="#">
