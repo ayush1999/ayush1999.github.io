@@ -118,9 +118,9 @@
                         <b>Links to commits:</b><br><br>
                         As I said, I had to write most of the package from scratch, so you can find my commits <a href="https://github.com/FluxML/ONNX.jl/commits/master">here</a>.
                         However, I'd like 
-                        to highlight a few major commits. <br><br>
-                        <ul>
-                            <li><u a href="https://github.com/FluxML/ONNX.jl/commit/f5cb01d3d86e6483bfad56ee383b6e5da8ae0e3e">Adding the ProtoBuf file</a></li>
+                        to highlight a few major commits. <br><br><b>
+                        <ul><u>
+                            <li><a href="https://github.com/FluxML/ONNX.jl/commit/f5cb01d3d86e6483bfad56ee383b6e5da8ae0e3e">Adding the ProtoBuf file</a></li>
                         
                             <li><a href="https://github.com/FluxML/ONNX.jl/commit/a235bba05aa0568e1a4992df80353373950b4edd">Adding the New Julian data types</a></li>
                             <li><a href="https://github.com/FluxML/ONNX.jl/commit/213005cb4efc9107dc09e47bc3395f18a4de0f2f">Conversion to these newer types</a></li>
@@ -129,7 +129,7 @@
                             <li><a href="https://github.com/FluxML/ONNX.jl/commit/e2652127dfff402c7485fdff60d2bfb7152362f1">Logical Operators and corresponding tests.</a></li>
                             </u>
                         </ul>
-
+                        </b>
                         <br>
                         Apart from this, I also wrote operator tests. In total, I was able to write tests for approximately 125 operators.
                         I also opened a few issues in the main ONNX repository, which highlighted some bugs in models, errors and missing details 
@@ -180,14 +180,17 @@
 
                     <p>
                         Though most of the code was written by me, I'd like to list a few major commits:<br>
-                        <ul><u>
-                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/5daa900ffd2e19098a837b485423b73f3615d7b0">Basic support for 
-                            Sequential API</a></li>
-                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/867775a806d3b442b1f922a9080ed2018ef5d781">Basic functional API support.</a></li>
-                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/ed947c194b4c05097e590b6c2469178753720d5b">Docs and miscellaneous changes.</a></li>
-                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/c682b35419fb2bb67c7bf638430282cfc36213eb">IMdB sentiment analysis example.</a></li>
-                            <li><a href="https://github.com/ayush1999/Keras.jl/commit/6586860a473ffb0eadae8ec4fbb98cfabc4e2728">Text Generation</a></li>
-                        </ul> </u>
+                        <ul>
+                            <li><b><u><a href="https://github.com/ayush1999/Keras.jl/commit/5daa900ffd2e19098a837b485423b73f3615d7b0">Basic support for 
+                            Sequential API</a></u></b></li> Sequential models are pretty straightforward to deal with, since they contain a straight chain
+                            of operators. <br>
+                            <li><b><u><a href="https://github.com/ayush1999/Keras.jl/commit/867775a806d3b442b1f922a9080ed2018ef5d781">Basic functional API support.</a></u></b></li>
+                            Functional models can be a bit tricky, since the computation graph they generate can be a bit complicated. I added basic support 
+                            for functional models in this PR.<br>
+                            <li><u><b><a href="https://github.com/ayush1999/Keras.jl/commit/ed947c194b4c05097e590b6c2469178753720d5b">Docs and miscellaneous changes.</a></u></b></li>
+                            <li><b><u><a href="https://github.com/ayush1999/Keras.jl/commit/c682b35419fb2bb67c7bf638430282cfc36213eb">IMdB sentiment analysis example.</a></u></b></li>
+                            <li><b><u><a href="https://github.com/ayush1999/Keras.jl/commit/6586860a473ffb0eadae8ec4fbb98cfabc4e2728">Text Generation</a></u></b></li>
+                        </ul>
                     </p>
                     <b>Future Work:</b><br><br>
                     Since Keras-TensorFlow is a fairly evolved framework, Flux might need to add support for complicated operators in 
@@ -239,6 +242,17 @@
                         </ul>
                     </u>
                     </p>
+                    <h2 class="section-heading">How this project helps the community</h2>
+                    <p>
+                        Flux is an amazing framework. It combines the speed and elegance of Julia with its simple yet powerful structure,
+                        to make training models, implementing layers as simple as writing just a few lines of code. As Flux gains popularity 
+                        as a major machine learning framework, we need to make sure people realize it's power. One way to do this is to import models
+                        made in other diverse frameworks, such as TensorFlow, PyTorch, CoreML into Flux. This is where
+                        my project comes in.<br><br>
+                        With <i>ONNX.jl</i> and <i>Keras.jl</i>, you can easily run and load diverse models into Flux. These can then be used
+                        in other packages
+                        providing a suite of computer vision functionalities, such as <i>Metalhead.jl</i>.   
+                    </p>
                     <h2 class="section-heading">Conclusion:</h2>
                     <p>
                         These three months made me realize how vast, deep and interesting the field of Machine Learning is. I'm glad
@@ -249,7 +263,7 @@
                          I'd like to thank my mentors for this project,
                         <i>Phil Tomson</i> and
                         <i>Mike Innes</i> for their support and guidance. I'd also like to thank
-                        <i>Jacob Bradbury</i> for helping me whenever I faced any issues. The Julia community were truly a pleasure to work with. I hope
+                        <i>James Bradbury</i> for helping me whenever I faced any issues. The Julia community were truly a pleasure to work with. I hope
                         I continue learning from them in the future. 
                          
                     </p>
